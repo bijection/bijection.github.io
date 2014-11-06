@@ -241,7 +241,7 @@ var v;
 
 function init() {
   v = document.getElementById('v');
-  navigator.webkitGetUserMedia({video:true}, callbackStreamIsReady, function(){console.log('err')});
+  // navigator.webkitGetUserMedia({video:true}, callbackStreamIsReady, function(){console.log('err')});
 }
 
 function callbackStreamIsReady(stream) {
