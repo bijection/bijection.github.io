@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>
+			100% natural canned artist!
+		</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+	<body onload="init()">
+		<video id="v" width="0" height="0"></video>
+		<canvas id="bg"></canvas>
+		<div id="wrapper">
+			<canvas id="canvas"></canvas>
+		</div>
+		<script type="text/javascript" src="js/particles.js" ></script>
+		<br /><br /><br /><br /><br />
+		<center>Press o for options!</center>
+		<div id="controls">
+			Gravity<br />
+			<input type="range" value="0" min="0" max="3000" maxlength="3" onchange="ygrav=this.value/100000;"><br />
+			Repulsion Distance<br />
+			<input type="range" value="90" min="0" max="200" maxlength="3" onchange="push=parseInt(this.value);dist=pull+push;"><br />
+			Attraction Distance<br />
+			<input type="range" value="15" min="0" max="100" maxlength="3" onchange="pull=parseInt(this.value);dist=pull+push;"><br />
+			Viscosity<br />
+			<input type="range" value="10" min="1" max="100" maxlength="3" onchange="visc=this.value/500;"><br />
+			Force<br />
+			<input type="range" value="1" min="0" max="100" maxlength="3" onchange="mult=Math.pow(2,(this.value/1000000))-1;"><br />
+			Size (Requires Reset)<br />
+			<input type="range" value="14" min="2" max="200" maxlength="3" onchange="rdist=this.value;"><br />
+			Fade<br />
+			<input type="range" value="0" min="0" max="100" maxlength="3" onchange="opa=this.value/100;"><br />
+			<input type="button" value="Toggle Lines" onclick="lines=!lines"><br />
+			<input type="button" value="Toggle Dots" onclick="dots=!dots"><br />
+			<input type="button" value="Toggle Images" onclick="pichurs=!pichurs"><br />
+			<input type="button" value="Start / Reset" onclick="reset()"><br />
+		</div>
+	</body>
+</html>
