@@ -245,6 +245,7 @@ var isRetina = (
 );
 
 function init() {
+  document.title = "\u200b"
   v = document.getElementById('v');
   // navigator.webkitGetUserMedia({video:true}, callbackStreamIsReady, function(){console.log('err')});
 }
