@@ -239,6 +239,11 @@ window.requestAnimationFrame = requestAnimationFrame;
 
 var v;
 
+var isRetina = (
+	window.devicePixelRatio > 1 ||
+	(window.matchMedia && window.matchMedia("(-webkit-min-device-pixel-ratio: 1.5),(-moz-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)").matches)
+);
+
 function init() {
   v = document.getElementById('v');
   // navigator.webkitGetUserMedia({video:true}, callbackStreamIsReady, function(){console.log('err')});
@@ -257,10 +262,26 @@ function draw()
 	
 	//console.log(pic);
 	if(lw != W || lh != H){
-		canvas.width = W; 
+
+
+		canvas.width = W;
 		canvas.height = H;
+		
 		lw=W;
 		lh=H;
+
+		if (isRetina){
+			canvas.width = W*2;
+			canvas.height = H*2;
+
+			canvas.style.width = W+"px";
+			canvas.style.height = H+"px";
+
+			ctx.scale(2,2)
+
+			console.log("wolo", canvas.style.height)
+
+		}
 		//console.log(lw+W+lh+H)
 	}
 //	ctx.fillStyle = "rgba(255, 0, 255, 1)";
