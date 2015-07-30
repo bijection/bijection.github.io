@@ -17,6 +17,9 @@
 		<link rel="icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32" />
 		<link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16" />
 		<link rel="icon" type="image/png" href="favicon/favicon-128.png" sizes="128x128" />
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+
 		<meta name="application-name" content="&nbsp;"/>
 		<meta name="msapplication-TileColor" content="#FFFFFF" />
 		<meta name="msapplication-TileImage" content="favicon/mstile-144x144.png" />
@@ -27,33 +30,19 @@
 
 	</head>
 	<body onload="init()">
-		<video id="v" width="0" height="0"></video>
-		<canvas id="bg"></canvas>
-		<div id="wrapper">
-			<canvas id="canvas"></canvas>
+		<canvas id="canvas"></canvas>
+		<div class="footer">
+			<a href="#antigone"><img src="img/down_brown.png" class="down"></a><br />
+			<div class="burritolike">
+				<div class="narcissus">
+					<h1 id="antigone">Hallo</h1>
+					<h2>I'm Guillermo Webster</h2>
+					<p>I'm a junior at MIT &mdash; to quote Kwok, this is my 'obligatory online presence'. I make <a href="http://tesseract.projectnaptha.com">Tesseract.js</a>, <a href="http://projectnaptha.com">Project Naptha</a>, <a href="http://snakt.com">Snakt</a>, and some other things.</p>
+
+					<p>You can say hallo to me at <a href="mailto:gui@mit.edu">gui@mit.edu</a>!</p>
+				</div>
+			</div>
 		</div>
 		<script type="text/javascript" src="js/particles.js" ></script>
-		<br /><br /><br /><br /><br />
-		<center>Press o for options!</center>
-		<div id="controls">
-			Gravity<br />
-			<input type="range" value="0" min="0" max="3000" maxlength="3" onchange="ygrav=this.value/100000;"><br />
-			Repulsion Distance<br />
-			<input type="range" value="90" min="0" max="200" maxlength="3" onchange="push=parseInt(this.value);dist=pull+push;"><br />
-			Attraction Distance<br />
-			<input type="range" value="15" min="0" max="100" maxlength="3" onchange="pull=parseInt(this.value);dist=pull+push;"><br />
-			Viscosity<br />
-			<input type="range" value="10" min="1" max="100" maxlength="3" onchange="visc=this.value/500;"><br />
-			Force<br />
-			<input type="range" value="1" min="0" max="100" maxlength="3" onchange="mult=Math.pow(2,(this.value/1000000))-1;"><br />
-			Size (Requires Reset)<br />
-			<input type="range" value="14" min="2" max="200" maxlength="3" onchange="rdist=this.value;"><br />
-			Fade<br />
-			<input type="range" value="0" min="0" max="100" maxlength="3" onchange="opa=this.value/100;"><br />
-			<input type="button" value="Toggle Lines" onclick="lines=!lines"><br />
-			<input type="button" value="Toggle Dots" onclick="dots=!dots"><br />
-			<input type="button" value="Toggle Images" onclick="pichurs=!pichurs"><br />
-			<input type="button" value="Start / Reset" onclick="reset()"><br />
-		</div>
 	</body>
 </html>

@@ -1,7 +1,7 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 	ctx.globalCompositeOperation = "source-under";
-var bg = document.getElementById("bg");
+var bg = document.createElement("canvas");
 var bgctx = bg.getContext("2d");
 var controls = document.getElementById("controls")
 
@@ -14,6 +14,8 @@ var lw = 0;
 var lh = 0;
 var W = 1900; var H = 700;
 
+var coolnewheight = 0;
+
 var xgrav = .0;
 var ygrav = .0;
 
@@ -22,7 +24,7 @@ var push = 25;//21
 var pull = 25;//24
 var mult = 0.000042//.002;
 var bounce = .1;
-var dist = push+pull;//console.log(dist);
+// var dist = push+pull;//console.log(dist);
 var fric = 1;
 var rad = 4;
 var wfric = .5;
@@ -33,7 +35,7 @@ var mouseX, mouseY;
 var times = 0;
 var avgtime = 0;
 
-var rdist = 50;
+var rdist = 500;
 var rectdist = rdist;
 
 var particles = [];
@@ -58,36 +60,36 @@ function create_particle()
 	this.vy = 0;
 	this.ax = 0;
 	this.ay = 0;
-	this.mass = Math.random()*2-1
+	this.mass = 1;//Math.random()*2-1
 	
 	var imj = ctx.getImageData(this.x-rectdist/2,this.y-rectdist/2,rectdist,rectdist);
 	var data = imj.data;
 	var width = imj.width;
 	var height = imj.height;
 
-	for(var y = 0; y < height-1; y++) {
-	// loop through each column
-		for(var x = 0; x < width-1; x++) {
-			var d = Math.sqrt((x-width/2)*(x-width/2)+(y-height/2)*(y-height/2));
-			var r = rectdist/2-5;
-			if(d>r)
-			{
-				data[(height * 4 * y) + (x * 4) + 3] = 0;
-			}
-		}
-	}
-	imj.data = data;
+	// for(var y = 0; y < height-1; y++) {
+	// // loop through each column
+	// 	for(var x = 0; x < width-1; x++) {
+	// 		var d = Math.sqrt((x-width/2)*(x-width/2)+(y-height/2)*(y-height/2));
+	// 		var r = rectdist/2-5;
+	// 		if(d>r)
+	// 		{
+	// 			data[(height * 4 * y) + (x * 4) + 3] = 0;
+	// 		}
+	// 	}
+	// }
+	// imj.data = data;
 
-	bg.width = width;
-	bg.height = height;
-	bgctx.putImageData(imj,0,0,0,0,width-1,height-1)
+	// bg.width = width;
+	// bg.height = height;
+	// bgctx.putImageData(imj,0,0,0,0,width-1,height-1)
 	//console.log(im)
 	//ctx.putImageData(imj,0,0);
-	var image = new Image(width, height);
-	image.src = bg.toDataURL();
+	// var image = new Image(width, height);
+	// image.src = bg.toDataURL();
 
-	console.log(image.width,image.height)
-	this.im = image;
+	// console.log(image.width,image.height)
+	// this.im = image;
 
 	this.color = "rgba(0,0,0,1)";
 	
@@ -121,16 +123,20 @@ function getWidth() {
 }
 
 function getHeight() {
+	var height
     if (self.innerWidth) {
-       return self.innerHeight;
+       height = self.innerHeight;
     }
-    if (document.documentElement && document.documentElement.clientHeight){
-        return document.documentElement.clientHeight;
+    else if (document.documentElement && document.documentElement.clientHeight){
+        height = document.documentElement.clientHeight;
     }
-    if (document.body) {
-        return document.body.clientHeight;
+    else if (document.body) {
+        height = document.body.clientHeight;
     }
-    return 0;
+    else {
+    	return 0
+    }
+	return height - 40;
 }
 
 
@@ -139,6 +145,8 @@ function calc(){
 	H=getHeight();
 	addvels();
 	connections = [];
+
+	var dist = push + pull
 	for(var t = 0; t < particles.length; t++){
 		var p = particles[t];	
 		/*var v = Math.sqrt(p.vx*p.vx+p.vy*p.vy);
@@ -222,10 +230,21 @@ function addvels() {
 		//else if(p.x > W) {p.x=0;}
 		//if(p.y < 0) {p.y=H;}
 		//else if(p.y > H) {p.y=0;}
+		var inset = p.radius+100;
+		var insetacceleration = .05
 		if(p.x < p.radius) {p.x+=1.1*(p.radius-p.x); p.vx *= -bounce; p.vy *= wfric}
 		else if(p.x > W-p.radius) {p.x-=1.1*(p.x-(W-p.radius)); p.vx *= -bounce; p.vy *= wfric}
 		if(p.y < p.radius) {p.y+=1.1*(p.radius-p.y); p.vy *= -bounce; p.vx *= wfric}
+		// if(p.y < coolnewheight+p.radius) {p.y+=1.1*(coolnewheight+p.radius-p.y); p.vy *= -bounce; p.vx *= wfric}
 		else if(p.y > H-p.radius) {p.y-=1.1*(p.y-(H-p.radius)); p.vy *= -bounce; p.vx *= wfric}//*/
+		
+		if(p.x < inset) {p.vx += insetacceleration}
+		else if(p.x > W-inset) {p.vx -= insetacceleration}
+		if(p.y < inset) {p.vy += insetacceleration}
+		else if(p.y > H-inset) {p.vy -= insetacceleration}//*/
+
+		// if(p.y < coolnewheight + p.radius) {p.vy += .1}
+
 	}
 }
 
@@ -244,9 +263,25 @@ var isRetina = (
 	(window.matchMedia && window.matchMedia("(-webkit-min-device-pixel-ratio: 1.5),(-moz-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)").matches)
 );
 
+function tween_color(c1, c2, r) {
+	return 'rgb('+Math.round(c1.r*r+c2.r*(1-r))+','+Math.round(c1.g*r+c2.g*(1-r))+','+Math.round(c1.b*r+c2.b*(1-r))+')'
+}
+
+
 function init() {
   document.title = "\u200b"
-  v = document.getElementById('v');
+  // setfootercolor()
+
+  //I swear I have a good reason for using setinterval
+	setInterval(calc, 5);
+	//calc();
+	setInterval(draw, 1000/30);
+
+	// setInterval(setfootercolor, 10000)
+
+	setTimeout("reset()",100);
+
+  // v = document.getElementById('v');
   // navigator.webkitGetUserMedia({video:true}, callbackStreamIsReady, function(){console.log('err')});
 }
 
@@ -256,12 +291,35 @@ function callbackStreamIsReady(stream) {
   console.log("wolo")
 }
 
+function fixdim() {
+
+	var doc = document.documentElement;
+	var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+	
+	var rect = canvas.getBoundingClientRect()
+
+	coolnewheight = Math.min(-rect.top,rect.height*49/50)
+
+
+	document.querySelector('.down').style.opacity = 1-coolnewheight/100
+	// document.querySelector('.footer').style['background-color'] = tween_color({r:255, g:0, b:134},{r:255, g:248, b:225},Math.min(Math.max(0,1-coolnewheight/100),1)) 
+
+	mult = .000042 * (coolnewheight/rect.height*3+1)
+	push = 25 * (coolnewheight/rect.height*3+1)
+	// console.log(bottom)
+	// if(bottom < 100){
+	// 	document.getElementById('logo').style.left = bottom - 100
+	// }
+	
+}
+
+addEventListener('scroll', fixdim)
 
 
 function draw()
 {	
-	
-	//console.log(pic);
+	var rect = canvas.getBoundingClientRect()
+	if(rect.top > -rect.height){
 	if(lw != W || lh != H){
 
 
@@ -291,7 +349,8 @@ function draw()
 	//ctx.drawImage(pic,200,400);
 //	console.log(pic);
 	ctx.fillStyle = "rgba(255, 255, 255, "+opa+")";
-	ctx.fillRect(0, 0, W, H);
+	// ctx.fillRect(0, 0, W, H);
+	ctx.clearRect(0, 0, W, H);
 	if(pichurs){
 		for(var t = 0; t < particles.length; t++)
 		{
@@ -307,9 +366,9 @@ function draw()
 		}
 	}
 	if(dots){
+		ctx.fillStyle = "white";
 		for(var t = 0; t < particles.length; t++){
 			var p = particles[t];
-			ctx.fillStyle = "black";
 			ctx.moveTo(p.x, p.y);
 			ctx.beginPath();
 			ctx.arc(p.x, p.y, p.radius, Math.PI*2, false);
@@ -317,18 +376,21 @@ function draw()
 		}
 	}
 	if(lines){
-		for(var t = 0; t < connections.length; t++)
+		ctx.strokeStyle = "white";	
+		ctx.beginPath();	
+		for(var t = Math.min(connections.length -1,2000); t >= 0; t--)
 		{
 			m=connections[t];
 			var p = m.p1;
 			var j = m.p2;
-			ctx.strokeStyle = "black";
-			ctx.beginPath();
 			ctx.moveTo(p.x, p.y);
 			ctx.lineTo(j.x, j.y);
-			ctx.stroke();
 		}//*/
+		ctx.stroke();	
+	}		
 	}
+	//console.log(pic);
+
 }
 
 function calc1(){
@@ -337,19 +399,13 @@ function calc1(){
 	console.timeEnd('calc timer');
 }
 
-setInterval(calc, 5);
-//calc();
-setInterval(draw, 1000/30);
-
-
-setTimeout("reset()",100);
 // setTimeout('$( "#controls" ).toggle( "drop" , {}, 500 );',100);
 
 
 
 function reset(){
 	rectdist = rdist;
-	ctx.drawImage(v,0,0,W,H);
+	// ctx.drawImage(v,0,0,W,H);
 	particles=[];
 	for(var i = 0; i < nump; i++)
 	{
@@ -358,9 +414,9 @@ function reset(){
 }
 
 
-canvas.addEventListener("mousedown", startdrag, false);
-canvas.addEventListener("mouseup", enddrag, false);
-canvas.addEventListener("mousemove", mouseMove, false);
+document.addEventListener("mousedown", startdrag, false);
+document.addEventListener("mouseup", enddrag, false);
+document.addEventListener("mousemove", mouseMove, false);
 
 document.addEventListener("keypress", showcont, false);
 
@@ -389,7 +445,8 @@ function startdrag(event)
   var x = event.x;
   var y = event.y;
   getdots([x,y], 200);
-  //console.log(drag);
+  console.log(event);
+  // setfootercolor()
 
 }
 
