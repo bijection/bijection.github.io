@@ -5,19 +5,20 @@ var lasttime,
 	
 
 var params = {
-	bounce: .1,
+	bounce: 0.1,
 	dots: true,
 	fric: 1,
 	initialinset: 500,
 	lines: true,
-	mult: .0000005,
+	mult: 0.0006933874625807412,
 	nump: 200,
-	pull: 80,
-	push: 200,
-	visc: .005,
-	wfric: .5,
-	xgrav: .0,
-	ygrav: .0
+	pull: 68,
+	push: 112,
+	pushratio: 0.76,
+	visc: 54,
+	wfric: 0.5,
+	xgrav: 0,
+	ygrav: 0,
 }
 
 var particles = particle_system(canvas, params);
@@ -51,8 +52,7 @@ function main (time) {
 
 	var dt = (time - lasttime)
 
-	particles.calc(dt * timescale)
-	particles.draw()
+	particles.nextframe(dt * timescale)
 
 	lasttime = time
 	requestAnimationFrame(main)
@@ -81,4 +81,4 @@ function scrollhandle() {
 	timescale = 1 - coolnewheight
 }
 
-addEventListener('scroll', scrollhandle)
+// addEventListener('scroll', scrollhandle)

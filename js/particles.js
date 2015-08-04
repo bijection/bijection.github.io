@@ -6,7 +6,6 @@ function particle_system(canvas, params){
 	var ctx = canvas.getContext("2d");
 	var particles = [];
 	var drag = [];
-	var intervals = []
 	var connections = []
 	var circle = (function(){
 		var tmpCanvas = document.createElement('canvas');
@@ -30,7 +29,6 @@ function particle_system(canvas, params){
 			y: Math.random()*(canvas.height-2*params.initialinset) + params.initialinset,
 
 			c: 1,
-			c1: 1,
 			
 			vx: 0,
 			vy: 0,
@@ -44,46 +42,139 @@ function particle_system(canvas, params){
 	}
 
 
+	function updateconnections(){
+		var intervals = []
+		var dist = params.push + params.pull
+		particles.forEach(function(p,j){
+			// console.log(p)
+			intervals.push({
+				particle:j,
+				type:"start",
+				x:p.x-dist
+			})
+			intervals.push({
+				particle:j,
+				type:"end",
+				x:p.x+dist
+			})
+		})
+		intervals.sort(function(p,q){
+			return p.x - q.x
+		})
+		var particlesincurrentinterval = new Set();
+
+		var len = intervals.length
+		for (var i = 0; i < len; i++) {
+			var curinterval=intervals.pop()
+			if(curinterval.type === "start"){
+				var diameter = 2*dist
+				var radiussquared = dist*dist
+				// console.log(curpoints.length)
+				var p = particles[curinterval.particle]
+
+				particlesincurrentinterval.forEach(function(index){
+					var q = particles[index]
+					var dy = p.y - q.y
+					if(Math.abs(dy)<diameter){
+						var dx = p.x - q.x
+						var d = dx*dx+dy*dy
+						if(d<radiussquared){
+							connections.push({
+								p1:curinterval.particle,
+								p2:index
+							})
+						}
+					}
+				})
+				particlesincurrentinterval.add(curinterval.particle)
+			}
+			else {
+				particlesincurrentinterval.delete(curinterval.particle)
+			}
+		}
+	}
+
 	function addvels(dt) {
-
-
-
+		var fxs = Array.apply(null,Array(params.nump)).map(function(){ return 0 }), 
+			fys = Array.apply(null,Array(params.nump)).map(function(){ return 0 })
+		var dist = params.push + params.pull
 		var m
 		while(typeof (m=connections.pop()) === "object")
 		{
+
 			var p1 = particles[m.p1];
 			var p2 = particles[m.p2];
-			var fx=m.dx*m.f;
-			var fy=m.dy*m.f;
-			p1.ax+=(fx*p2.c+params.visc*(m.dvx-m.dot*m.dx)/(m.d))/p1.c;
-			p1.ay+=(fy*p2.c+params.visc*(m.dvy-m.dot*m.dy)/(m.d))/p1.c;
-			p2.ax-=(fx*p1.c+params.visc*(m.dvx-m.dot*m.dx)/(m.d))/p2.c;
-			p2.ay-=(fy*p1.c+params.visc*(m.dvy-m.dot*m.dy)/(m.d))/p2.c;
+
+			var dx = p1.x - p2.x
+			var dy = p1.y - p2.y
+
+			var d = Math.sqrt(dx*dx+dy*dy)
+
+			var dvx = p1.vx-p2.vx;
+			var dvy = p1.vy-p2.vy;
+
+			var dot = (dx*dvx+dy*dvy)/d;
+
+			var dv = Math.sqrt(dvx*dvx+dvy*dvy)
+
+			var f = d < params.push ? (params.push - d)*params.pushratio : (d-dist) * (1-params.pushratio)
+			// console.log(f)
+
+
+			fxs[m.p1]+= dx/d * f;
+			fys[m.p1]+= dy/d * f;
+
+			fxs[m.p2]-= dx/d * f;
+			fys[m.p2]-= dy/d * f;
+
+
+			var visc = d < params.push ? params.visc : 0
+
+			fxs[m.p1]-= (dvx - dot*dx/d)*visc;
+			fys[m.p1]-= (dvy - dot*dy/d)*visc;
+
+			fxs[m.p2]+= (dvx - dot*dx/d)*visc;
+			fys[m.p2]+= (dvy - dot*dy/d)*visc;
+
+
+			// var visc = m.d < params.push  ? params.visc : 0
+
+			// p1.ax+=(fx*p2.c+visc*(m.dvx-m.dot*m.dx)/(m.d))/p1.c;
+			// p1.ay+=(fy*p2.c+visc*(m.dvy-m.dot*m.dy)/(m.d))/p1.c;
+			
+			// p2.ax-=(fx*p1.c+visc*(m.dvx-m.dot*m.dx)/(m.d))/p2.c;
+			// p2.ay-=(fy*p1.c+visc*(m.dvy-m.dot*m.dy)/(m.d))/p2.c;
 		}//*/
 		for(var i = 0; i < drag.length; i++){
 			var m=drag[i];
 			var d = (mouse.x-m.x)*(mouse.x-m.x)+(mouse.y-m.y)*(mouse.y-m.y);
-			m.ax+=(mouse.x-m.x)/(1000*m.c);
-			m.ay+=(mouse.y-m.y)/(1000*m.c);
+			fxs[particles.indexOf(m)]+=(mouse.x-m.x)/(10000*m.c)*1000;
+			fys[particles.indexOf(m)]+=(mouse.y-m.y)/(10000*m.c)*1000;
 		}
 		for(var i = 0; i<particles.length; i++){
-			var p=particles[i];
-			p.c1=p.c-1;
-			p.c=1;
+			var p=particles[i], fx=fxs[i]*params.mult, fy = fys[i]*params.mult;
+
+			// p.c=1;
+
+			// console.log(fx,fy)
 
 			var oldvx = p.vx
 			var oldvy = p.vy
 
-			p.vx+=p.ax;
-			p.vy+=p.ay;
-			p.ax=0;
-			p.ay=0;
-			p.vx*=params.fric;
-			p.vy*=params.fric;
-			p.vy+=params.ygrav;
-			p.vx+=params.xgrav;
-			p.x += (p.vx+oldvx)/2*dt;
-			p.y += (p.vy+oldvy)/2*dt;
+			p.vx+=fx;
+			p.vy+=fy;
+
+			// p.ax=0;
+			// p.ay=0;
+			
+			p.vx*= params.fric;
+			p.vy*= params.fric;
+			
+			p.vy+= params.ygrav;
+			p.vx+= params.xgrav;
+
+			p.x += p.vx*dt;
+			p.y += p.vy*dt;
 
 			if(p.x < p.radius) {p.x+=1.1*(p.radius-p.x); p.vx *= -params.bounce; p.vy *= params.wfric}
 			else if(p.x > canvas.width-p.radius) {p.x-=1.1*(p.x-(canvas.width-p.radius)); p.vx *= -params.bounce; p.vy *= params.wfric}
@@ -100,81 +191,12 @@ function particle_system(canvas, params){
 	}
 
 
-	function updateconnections(){
-		var dist = params.push + params.pull
-		particles.forEach(function(p,j){
-			intervals.push({
-				particle:j,
-				type:"start",
-				x:p.x-dist
-			})
-			intervals.push({
-				particle:j,
-				type:"end",
-				x:p.x+dist
-			})
-		})
-		intervals.sort(function(p,q){
-			return p.x - q.x
-		})
-		var particlesincurrentinterval = new Set(),
-			curinterval
-		while(typeof (curinterval=intervals.pop()) === "object"){
-			if(curinterval.type === "start"){
-				var diameter = 2*dist
-				var radiussquared = dist*dist
-				// console.log(curpoints.length)
-				var p = particles[curinterval.particle]
-
-				particlesincurrentinterval.forEach(function(index){
-					var q = particles[index]
-					var dy = p.y - q.y
-					if(Math.abs(dy)<diameter){
-						var dx = p.x - q.x
-						var d = dx*dx+dy*dy
-						if(d<radiussquared){
-							d = Math.sqrt(d)
-							p.c+=1/(d*d+10);
-							q.c+=1/(d*d+10);
-							var dvx = p.vx-q.vx;
-							var dvy = p.vy-q.vy;
-							var dot = (dx*dvx+dy*dvy)/(d);
-							var f=params.mult*(dist-d)*(params.push-d)/d;
-							connections.push({
-								p1:curinterval.particle,
-								p2:index,
-								dx:dx,
-								dy:dy,
-								dvx:dvx,
-								dvy:dvy,
-								dot:dot,
-								f:f,
-								d:d
-							})
-						}
-					}
-				})
-				particlesincurrentinterval.add(curinterval.particle)
-			}
-			else {
-				particlesincurrentinterval.delete(curinterval.particle)
-			}
-		}
-	}
-
-
-
-	function calc(dt){
-		addvels(dt);
-		updateconnections()
-	}
-
 
 	function draw()
 	{	
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		if(params.lines){
-			ctx.strokeStyle = "#ffeeee";
+			ctx.strokeStyle = "#ffffff";
 			// ctx.lineWidth = 2;
 			ctx.beginPath();
 			for(var t = 0; t < connections.length; t++)
@@ -186,7 +208,7 @@ function particle_system(canvas, params){
 				ctx.lineTo(j.x, j.y);
 			}
 
-				ctx.stroke();
+			ctx.stroke();
 
 		}
 		if(params.dots){
@@ -195,6 +217,12 @@ function particle_system(canvas, params){
 				ctx.drawImage(circle,p.x-8,p.y-8)
 			}
 		}
+	}
+
+	function nextframe(dt){
+		updateconnections()
+		draw()
+		addvels(dt)
 	}
 
 
@@ -227,8 +255,7 @@ function particle_system(canvas, params){
 
 	return {
 		reset: reset,
-		draw: draw,
-		calc: calc,
+		nextframe: nextframe,
 		startdragging: startdragging,
 		stopdragging: stopdragging
 	}

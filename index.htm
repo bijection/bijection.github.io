@@ -35,6 +35,34 @@
 			<a href="#antigone"><img src="img/down_brown.png" class="down"></a><br />
 			<div class="burritolike">
 				<div class="narcissus">
+
+					<div>
+					Repulsion Distance<br />
+					<input type="range" value="90" min="0" max="200" oninput="params.push=parseInt(this.value)">
+					<br />
+					<br />
+
+					Attraction Distance<br />
+					<input type="range" value="15" min="0" max="100" oninput="params.pull=parseInt(this.value)">
+					<br />
+					<br />
+
+					Viscosity<br />
+					<input type="range" value="10" min="1" max="1000" oninput="params.visc=parseInt(this.value);">
+					<br />
+					<br />
+
+					Force<br />
+					<input type="range" value="1" min="0" max="100" oninput="params.mult=Math.pow(2,(this.value/100000))-1;">
+					<br />
+					<br />
+
+					Push to Pull Ratio<br />
+					<input type="range" value="50" min="0" max="100" oninput="params.pushratio=this.value/100;">
+					<br />
+					<br />
+					</div>
+
 					<h1 id="antigone">Hallo</h1>
 					<h2>I'm Guillermo Webster</h2>
 					<p>I'm a junior at MIT &mdash; to quote Kwok, this is my 'obligatory online presence'. I make <a href="http://tesseract.projectnaptha.com">Tesseract.js</a>, <a href="http://projectnaptha.com">Project Naptha</a>, <a href="http://snakt.com">Snakt</a>, and some other things.</p>

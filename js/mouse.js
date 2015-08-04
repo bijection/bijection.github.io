@@ -20,7 +20,6 @@ var mouse = {
 	},
 
 	coords: function (e) {
-		e.preventDefault(); 
 		if(e.pageX){
 			mouse.set(e.pageX,e.pageY)
 		}
