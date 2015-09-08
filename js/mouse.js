@@ -14,8 +14,8 @@ var mouse = {
 	dragging: false,
 
 	set: function (x,y) {
-		mouse.x = x*2
-		mouse.y = y*2
+		mouse.x = x
+		mouse.y = y
 		mouse.direction = Math.atan2(y-mouse.start.y,x-mouse.start.x)
 	},
 

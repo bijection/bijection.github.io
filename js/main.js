@@ -1,5 +1,5 @@
 var lasttime,
-	timescale = 1,
+	// timescale = 1,
 	canvas = document.getElementById('canvas'),
 	ctx = canvas.getContext('2d');
 	
@@ -10,12 +10,12 @@ var params = {
 	fric: 1,
 	initialinset: 500,
 	lines: true,
-	mult: 0.0006933874625807412,
+	mult: 0.000042,
 	nump: 200,
-	pull: 68,
-	push: 112,
-	pushratio: 0.76,
-	visc: 54,
+	pull: 25,
+	push: 25,
+	// pushratio: 0.76,
+	visc: .05,
 	wfric: 0.5,
 	xgrav: 0,
 	ygrav: 0,
@@ -28,6 +28,11 @@ function init (time) {
 
 
 	particles.reset()
+
+
+	setInterval(function() {
+		particles.nextframe()
+	}, 5)
 
 
 	lasttime = time
@@ -52,7 +57,10 @@ function main (time) {
 
 	var dt = (time - lasttime)
 
-	particles.nextframe(dt * timescale)
+	// particles.draw()
+	// setInterval(function() {
+		// particles.nextframe()
+	// }, 5)
 
 	lasttime = time
 	requestAnimationFrame(main)
@@ -72,13 +80,13 @@ function scrollhandle() {
 	
 	var rect = canvas.getBoundingClientRect()
 
-	coolnewheight = 1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
+	coolnewheight = Math.min(-rect.top,rect.height*49/50)//1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
 
 
-	document.querySelector('.down').style.opacity = 1-coolnewheight/.05
+	document.querySelector('.down').style.opacity = 1-coolnewheight
 
-	push = 60 * (coolnewheight/rect.height+1)
-	timescale = 1 - coolnewheight
+	params.mult = .000042 * (coolnewheight/rect.height*3+1)
+	params.push = 25 * (coolnewheight/rect.height*3+1)
 }
 
-// addEventListener('scroll', scrollhandle)
+addEventListener('scroll', scrollhandle)
