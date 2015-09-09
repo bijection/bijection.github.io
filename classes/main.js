@@ -21,7 +21,7 @@ for (var i = 0; i<links.length; i++){
 		e.preventDefault()
 		setTimeout(() => {
 	      window.location = e.target.href;
-	   }, 1000);
+	   }, 300);
 	})
 }
 
