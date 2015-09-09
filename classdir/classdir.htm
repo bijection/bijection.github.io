@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>Class Directory</title>
+	<style>
+		body {
+			background: #A8EDFF;
+			font-family: 'avenir'
+		}
+		a {
+			font-style: bold;
+			text-decoration: none;
+			font-size: 55pt;
+			color: #fff;
+			line-height: 70px;
+			font-weight: 500;
+		}
+		a.sub1 {
+			font-size: 48pt;
+		}
+		a.sub2 {
+			font-size: 36pt;
+		}
+		div {
+			text-align: center;
+			background: #f55;
+			margin: auto;
+			margin-top: 100px;
+			width: 180px;
+			padding: 20px;
+			border-radius: 5px;
+			/*border-style: solid;
+			border-width: 1px;
+			border-color: #cacaca;*/
+			/*box-shadow: 0px 2px 1px #bbb;*/
+			position: relative;
+			z-index: 50
+		}
+		h6 {
+			margin: 0px;
+			color: #fff;
+			opacity: .7;
+		}
+		.space {
+			line-height: 20px;
+		}
+		canvas {
+			position:absolute;
+			top: 0px;
+			left: 0px;
+			pointer-events:none;
+			z-index: 0;
+		}
+		#canvas2 {
+			z-index: 100
+		}
+	</style>
+	<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body>
+	<canvas id="canvas1"></canvas>
+	<div>
+		<a href="https://stellar.mit.edu/S/course/6/fa15/6.870/">6.870</a><br>
+		<h6>Smartphone Vision</h6>
+		<br class="space">
+		<a href="https://stellar.mit.edu/S/course/6/fa15/6.867">6.867</a><br>
+		<h6>Machine Learning</h6>
+		<br class="space">
+		<a href="https://stellar.mit.edu/S/course/6/fa15/6.170/index.html">6.170</a><br>
+		<h6>Software Studio</h6>
+		<br class="space">
+		<a href="https://courses.csail.mit.edu/6.UAT/main.php">6.uat</a><br>
+		<h6>Oral Communication</h6>
+		<br class="space">
+		<a class = "sub2" href="https://stellar.mit.edu/S/course/21G/fa15/21G.701/index.html">21G.701</a><br>
+		<h6>Spanish 1</h6>
+	</div>
+	<canvas id="canvas2"></canvas>
+
+
+	<script src="mouse.js"></script>
+	<script src="dimensions.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
