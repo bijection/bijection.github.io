@@ -16,10 +16,10 @@ var links = document.getElementsByTagName('a')
 
 for (var i = 0; i<links.length; i++){
 	var link = links[i]
-	link.addEventListener('click', e => {
+	link.addEventListener('click', function(e) {
 		nudgeAll()
 		e.preventDefault()
-		setTimeout(() => {
+		setTimeout(function(){
 	      window.location = e.target.href;
 	   }, 300);
 	})
