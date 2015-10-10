@@ -82,7 +82,7 @@ function scrollhandle() {
 	
 	var rect = canvas.getBoundingClientRect()
 
-	coolnewheight = Math.min(-rect.top,rect.height*49/50)//1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
+	coolnewheight = Math.min(-rect.top,rect.height)//1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
 
 
 	document.querySelector('.down').style.opacity = 1-coolnewheight/window.innerHeight*2
@@ -90,8 +90,7 @@ function scrollhandle() {
 	params.mult = .000042 * (coolnewheight/rect.height*3+1)
 	params.push = 25 * (coolnewheight/rect.height*3+1)
 
-
-	animating = coolnewheight/window.innerHeight < 1
+	animating = rect.bottom > 0
 }
 
 addEventListener('scroll', scrollhandle)
