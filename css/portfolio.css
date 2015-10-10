@@ -1,0 +1,24 @@
+a {
+	cursor: pointer;
+}
+
+img.showoff {
+  width: 49%;
+  margin: .5%;
+  /*cursor: pointer;*/
+}
+
+.burritoish {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 8%;
+}
+
+.lios {
+	margin: -.5%;
+}
+
+.devi {
+	max-width: 100%;
+}

@@ -1,7 +1,8 @@
 var lasttime,
 	// timescale = 1,
 	canvas = document.getElementById('canvas'),
-	ctx = canvas.getContext('2d');
+	ctx = canvas.getContext('2d'),
+	animating = true;
 	
 
 var params = {
@@ -31,12 +32,13 @@ function init (time) {
 
 
 	setInterval(function() {
-		particles.nextframe()
+		fixdim()
+		if(animating) particles.nextframe()
 	}, 5)
 
 
 	lasttime = time
-	requestAnimationFrame(main)
+	// requestAnimationFrame(main)
 }
 
 function fixdim() {
@@ -52,7 +54,7 @@ function fixdim() {
 function main (time) {
   	document.title = "\u200b"
 
-	fixdim()
+	// fixdim()
 
 
 	var dt = (time - lasttime)
@@ -83,10 +85,13 @@ function scrollhandle() {
 	coolnewheight = Math.min(-rect.top,rect.height*49/50)//1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
 
 
-	document.querySelector('.down').style.opacity = 1-coolnewheight
+	document.querySelector('.down').style.opacity = 1-coolnewheight/window.innerHeight*2
 
 	params.mult = .000042 * (coolnewheight/rect.height*3+1)
 	params.push = 25 * (coolnewheight/rect.height*3+1)
+
+
+	animating = coolnewheight/window.innerHeight < 1
 }
 
 addEventListener('scroll', scrollhandle)
