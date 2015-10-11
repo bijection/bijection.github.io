@@ -48,9 +48,9 @@ var mouse = {
 	}
 }
 
-document.addEventListener("touchstart", mouse.down, false);
-document.addEventListener("touchend", mouse.up, false);
-document.addEventListener("touchmove", mouse.coords, true);
+// document.addEventListener("touchstart", mouse.down, false);
+// document.addEventListener("touchend", mouse.up, false);
+// document.addEventListener("touchmove", mouse.coords, false);
 
 document.addEventListener("mousedown", mouse.down, false);
 document.addEventListener("mouseup", mouse.up, false);

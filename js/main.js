@@ -36,33 +36,42 @@ function init (time) {
 	fixdim()
 
 
-	particles.reset()
 
 	lasttime = new Date().getTime()
 
-	if(mobilecheck()){
-		params.nump = 0
+
+	var desiredspeed = 500
+	var mobile = mobilecheck()
+
+	if(mobile){
+		params.nump = 30
 		balance = true
+		desiredspeed = 30
+	}
+	particles.reset()
+
+	if(mobile){
+		particles.nextframe()
 	}
 
-	setInterval(function() {
-		var time = new Date().getTime()
-		var dt = (time - lasttime)
-		lasttime = time
-		// console.log(dt)
+		(function frame() {
+			var time = new Date().getTime()
+			var dt = (time - lasttime)
+			lasttime = time
+			// console.log(dt)
 
-		if (balance){
-			if(dt > 20){
-				params.nump = Math.round(params.nump/2)
+			if (balance){
+				if(dt > desiredspeed*2){
+					params.nump = Math.round(params.nump/2)
+				}
+				else if(dt < desiredspeed && params.nump < 190){
+					params.nump++
+				}			
 			}
-			else if(dt < 20 && params.nump < 190){
-				params.nump++
-			}			
-		}
 
-		fixdim()
-		if(animating) particles.nextframe()
-	}, 5)
+			if(fixdim() || (animating)) particles.nextframe()
+			setTimeout(frame, 5)
+		})()
 
 
 	lasttime = time
@@ -70,12 +79,14 @@ function init (time) {
 }
 
 function fixdim() {
-	if(dimensions.update()){
+	var dirty = dimensions.update()
+	if(dirty){
 		canvas.width = dimensions.width*2
 		canvas.style.width = dimensions.width
 		canvas.height = dimensions.height*2 -20
 		canvas.style.height = dimensions.height -40
-	}	
+	}
+	return dirty
 }
 
 
