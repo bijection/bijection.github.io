@@ -257,7 +257,17 @@ function particle_system(canvas, params){
 		}
 	}
 
+	function matchNump() {
+		if(params.nump < particles.length){
+				particles.pop()
+		}
+		else if (params.nump > particles.length){
+			particles.push(Particle())
+		}
+	}
+
 	function nextframe(dt){
+		matchNump()
 		updateconnections()
 		draw()
 		addvels(dt)

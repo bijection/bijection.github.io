@@ -12,7 +12,7 @@ var params = {
 	initialinset: 500,
 	lines: true,
 	mult: 0.000042,
-	nump: 200,
+	nump: 10,
 	pull: 25,
 	push: 25,
 	// pushratio: 0.76,
@@ -30,8 +30,17 @@ function init (time) {
 
 	particles.reset()
 
-
+	lasttime = new Date().getTime()
 	setInterval(function() {
+		var time = new Date().getTime()
+		var dt = (time - lasttime)
+		lasttime = time
+		// console.log(dt)
+
+		if(dt < 10 && params.nump < 200){
+			params.nump++
+		}
+
 		fixdim()
 		if(animating) particles.nextframe()
 	}, 5)
@@ -85,8 +94,6 @@ function scrollhandle() {
 	var impoerialheight = Math.min(-rect.top,rect.height)/rect.height
 
 	coolnewheight = Math.max(impoerialheight, top/(r.height - window.innerHeight))//1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
-
-	console.log(coolnewheight, top)
 
 	document.querySelector('.down').style.opacity = 1-coolnewheight
 
