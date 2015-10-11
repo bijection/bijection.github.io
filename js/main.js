@@ -12,7 +12,7 @@ var params = {
 	initialinset: 500,
 	lines: true,
 	mult: 0.000042,
-	nump: 10,
+	nump: 200,
 	pull: 25,
 	push: 25,
 	// pushratio: 0.76,
@@ -37,8 +37,11 @@ function init (time) {
 		lasttime = time
 		// console.log(dt)
 
-		if(dt < 10 && params.nump < 200){
-			params.nump++
+		if(dt > 20){
+			params.nump = Math.round(params.nump/2)
+		}
+		else if(dt < 20 && params.nump < 200){
+			params.nump+=10
 		}
 
 		fixdim()
