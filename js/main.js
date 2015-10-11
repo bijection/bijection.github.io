@@ -82,13 +82,16 @@ function scrollhandle() {
 	
 	var rect = canvas.getBoundingClientRect()
 
-	coolnewheight = Math.min(-rect.top,rect.height)//1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
+	var impoerialheight = Math.min(-rect.top,rect.height)/rect.height
 
+	coolnewheight = Math.max(impoerialheight, top/(r.height - window.innerHeight))//1 - (r.bottom - window.innerHeight)/(r.height - window.innerHeight)//-rect.top/rect.height
 
-	document.querySelector('.down').style.opacity = 1-coolnewheight/window.innerHeight*2
+	console.log(coolnewheight, top)
 
-	params.mult = .000042 * (coolnewheight/rect.height*3+1)
-	params.push = 25 * (coolnewheight/rect.height*3+1)
+	document.querySelector('.down').style.opacity = 1-coolnewheight
+
+	params.mult = .000042 * (impoerialheight*3+1)
+	params.push = 25 * (impoerialheight*3+1)
 
 	animating = rect.bottom > 0
 }

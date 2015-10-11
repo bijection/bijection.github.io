@@ -30,7 +30,7 @@ var mouse = {
 			mouse.set(e.layerX,e.layerY)
 		}
 		else if(e.targetTouches){
-			mouse.set(e.targetTouches[0].page,e.targetTouches[0].pageY)
+			mouse.set(e.targetTouches[0].pageX,e.targetTouches[0].pageY)
 		}
 	},
 
@@ -43,7 +43,6 @@ var mouse = {
 	},
 
 	up: function (e) {
-		mouse.coords(e)
 		mouse.dragging = false
 		particles.stopdragging()
 	}
