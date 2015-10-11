@@ -18,13 +18,11 @@ canvas {
 .narcissus h1 {
   margin-top: 0
 }
-/*canvas {
-  background-image: url(../img/down.png);
-  background-size: 40px;
-  background-position: 50% 99%;
-  background-repeat: no-repeat;
+
+.noheight {
+  height: 0;
 }
-*/
+
 .footer {
   width: 100%;
   text-align: center;
@@ -37,7 +35,6 @@ canvas {
   height: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  position: absolute;
 }
 
 .burritolike {
