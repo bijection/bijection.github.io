@@ -22,3 +22,7 @@ img.showoff {
 .devi {
 	max-width: 100%;
 }
+
+canvas {
+  background-color: #4CFFE6;
+}
