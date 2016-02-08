@@ -5,8 +5,10 @@ var topcanvas = document.getElementById('canvas2')
 var topctx = topcanvas.getContext('2d')
 
 var NUM_MOVERS = 500
-var NUM_TOPMOVERS = 50
+// var NUM_TOPMOVERS = 50
 var TAILS = false
+
+var DEPTH = 10
 
 var movers = []
 var topmovers = []
@@ -30,9 +32,8 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
                               window.webkitRequestAnimationFrame || window.oRequestAnimationFrame;
 
 function gray (lightness) {
-	var l = Math.round(lightness)
-	return '#fff'
-	// return "rgba(255,255,"+l*+",1)"
+	// return '#fff'
+	return "rgba(255,255,255,"+lightness+")"
 }
 
 function distance (x1,y1,x2,y2) {
@@ -40,8 +41,8 @@ function distance (x1,y1,x2,y2) {
 }
 
 function Mover (x,y,size,direction,context) {
-	this.x = x
-	this.y = y
+	this.x = canvas.width/4 - (canvas.width/4-x)*DEPTH/2
+	this.y = canvas.height/4 - (canvas.height/4-y)*DEPTH/2
 	this.context = context
 	this.vx = 0//Math.cos(direction)*size/100
 	this.vy = 0//Math.sin(direction)*size/100
@@ -53,22 +54,29 @@ Mover.prototype.update = function (dt) {
 	this.x += this.vx*dt
 	this.y += this.vy*dt
 
-	while (this.x>canvas.width/2+this.size) {
-		this.x-=canvas.width/2+2*this.size
-	}
-	while (this.x<-this.size) {
-		this.x+=canvas.width/2+2*this.size
-	}
+	this.size = (this.size -dt / 1000)
+	while(this.size<0) this.size +=DEPTH;
 
-	while (this.y>canvas.height/2+this.size) {
-		this.y-=canvas.height /2+2*this.size
-	}
-	while (this.y<-this.size) {
-		this.y+=canvas.height/2+2*this.size
-	}
+	// canvas.width/4+(this.x - canvas.width/4)/this.size,
+	// -(canvas.width/4)+(this.x - canvas.width/4)/this.size,
+	// 	canvas.height/4+(this.y - canvas.height/4)/this.size,
+
+	// while (canvas.width/4+(this.x - canvas.width/4)/this.size>canvas.width/2+this.size) {
+	// 	this.x-=canvas.width/2*this.size+2*this.size
+	// }
+	// while (canvas.width/4+(this.x - canvas.width/4)/this.size<-this.size) {
+	// 	this.x+=canvas.width/2*this.size+2*this.size
+	// }
+
+	// while (canvas.height/4+(this.y - canvas.height/4)/this.size>canvas.height/2+this.size) {
+	// 	this.y-=canvas.height/2*this.size+2*this.size
+	// }
+	// while (canvas.height/4+(this.y - canvas.height/4)/this.size<-this.size) {
+	// 	this.y+=canvas.height/2*this.size+2*this.size
+	// }
 
 	if (mouse.dragging){
-		this.nudge(mouse.direction, .01)
+		this.nudge(mouse.direction, .001)
 	}
 }
 
@@ -100,8 +108,15 @@ Mover.prototype.draw = function () {
 		//this.context.fillStyle = gray(120)
 	}
 
+	this.context.fillStyle = gray(1-this.size/DEPTH)
+
+
 	this.context.beginPath();
-	this.context.arc(this.x,this.y,Math.sqrt(this.size),0,2*Math.PI);
+	this.context.arc(
+		canvas.width/4+(this.x - canvas.width/4)/this.size,
+		canvas.height/4+(this.y - canvas.height/4)/this.size,
+		4/this.size,
+		0,2*Math.PI);
 	this.context.fill();
 	this.context.closePath()
 
@@ -123,13 +138,12 @@ Mover.prototype.draw = function () {
 }
 
 Mover.prototype.nudge = function (direction, amount) {
-	this.vx = this.vx*(1-amount)+amount*Math.cos(direction)*this.size/100
-	this.vy = this.vy*(1-amount)+amount*Math.sin(direction)*this.size/100
+	this.vx = this.vx*(1-amount)+amount*Math.cos(direction)
+	this.vy = this.vy*(1-amount)+amount*Math.sin(direction)
 }
 
 Mover.prototype.nudgeFast = function (direction, amount) {
-	this.vx = this.vx*(1-amount)+amount*Math.cos(direction)*this.size/10
-	this.vy = this.vy*(1-amount)+amount*Math.sin(direction)*this.size/10
+	this.nudge(direction, amount*10)
 }
 
 function init (time) {
@@ -148,22 +162,24 @@ function init (time) {
 		topctx.scale(2,2)
 	}
 
-	for (var i = 0; i < NUM_TOPMOVERS; i++) {
-		topmovers.push(new Mover(
-			Math.random()*dimensions.width,
-			Math.random()*dimensions.height,
-			Math.pow(Math.random(),2)*9+3,
-			0,
-			topctx//0
-			)
-		)
-	}
+	// for (var i = 0; i < NUM_TOPMOVERS; i++) {
+	// 	topmovers.push(new Mover(
+	// 		Math.random()*canvas.width/2,
+	// 		Math.random()*canvas.height/2,
+	// 		// 3,
+	// 		Math.random()*3,
+	// 		0,
+	// 		topctx//0
+	// 		)
+	// 	)
+	// }
 
 	for (var i = 0; i < NUM_MOVERS; i++) {
 		movers.push(new Mover(
-			Math.random()*dimensions.width,
-			Math.random()*dimensions.height,
-			Math.pow(Math.random(),2)*3,
+			Math.random()*canvas.width/2,
+			Math.random()*canvas.height/2,
+			Math.random()*DEPTH,
+			// 3,
 			0,
 			ctx
 			)
