@@ -6,7 +6,7 @@ var topctx = topcanvas.getContext('2d')
 
 var NUM_MOVERS = 500
 var NUM_TOPMOVERS = 50
-var TAILS = true
+var TAILS = false
 
 var movers = []
 var topmovers = []
@@ -32,7 +32,7 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 function gray (lightness) {
 	var l = Math.round(lightness)
 	return '#fff'
-	// return "rgba(255,255,255,"+l+")"
+	// return "rgba(255,255,"+l*+",1)"
 }
 
 function distance (x1,y1,x2,y2) {
@@ -53,18 +53,18 @@ Mover.prototype.update = function (dt) {
 	this.x += this.vx*dt
 	this.y += this.vy*dt
 
-	if (this.x>canvas.width/2+this.size) {
-		this.x=-this.size
+	while (this.x>canvas.width/2+this.size) {
+		this.x-=canvas.width/2+2*this.size
 	}
-	if (this.x<-this.size) {
-		this.x=canvas.width/2+this.size
+	while (this.x<-this.size) {
+		this.x+=canvas.width/2+2*this.size
 	}
 
-	if (this.y>canvas.height/2+this.size) {
-		this.y=-this.size
+	while (this.y>canvas.height/2+this.size) {
+		this.y-=canvas.height /2+2*this.size
 	}
-	if (this.y<-this.size) {
-		this.y=canvas.height/2+this.size
+	while (this.y<-this.size) {
+		this.y+=canvas.height/2+2*this.size
 	}
 
 	if (mouse.dragging){
@@ -101,7 +101,7 @@ Mover.prototype.draw = function () {
 	}
 
 	this.context.beginPath();
-	this.context.arc(this.x,this.y,this.size,0,2*Math.PI);
+	this.context.arc(this.x,this.y,Math.sqrt(this.size),0,2*Math.PI);
 	this.context.fill();
 	this.context.closePath()
 

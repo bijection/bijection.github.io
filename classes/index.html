@@ -3,7 +3,7 @@
 	<title>Class Directory</title>
 	<style>
 		body {
-			background: #A8EDFF;
+			background: #060606;
 			font-family: 'avenir'
 		}
 		a {
@@ -20,11 +20,11 @@
 		a.sub2 {
 			font-size: 36pt;
 		}
-		div {
+		.classes {
 			text-align: center;
-			background: #f55;
+			/*background: #252525;*/
 			margin: auto;
-			margin-top: 100px;
+			margin-top: 48px;
 			width: 180px;
 			padding: 20px;
 			border-radius: 5px;
@@ -34,6 +34,9 @@
 			/*box-shadow: 0px 2px 1px #bbb;*/
 			position: relative;
 			z-index: 50
+		}
+		.item {
+			margin-top: 28px
 		}
 		h6 {
 			margin: 0px;
@@ -58,21 +61,31 @@
 </head>
 <body>
 	<canvas id="canvas1"></canvas>
-	<div>
-		<a href="https://stellar.mit.edu/S/course/6/fa15/6.870/">6.870</a><br>
-		<h6>Smartphone Vision</h6>
-		<br class="space">
-		<a href="https://piazza.com/class/ie19f3wxwap218">6.867</a><br>
-		<h6>Machine Learning</h6>
-		<br class="space">
-		<a href="https://stellar.mit.edu/S/course/6/fa15/6.170/index.html">6.170</a><br>
-		<h6>Software Studio</h6>
-		<br class="space">
-		<a href="https://courses.csail.mit.edu/6.UAT/main.php">6.uat</a><br>
-		<h6>Oral Communication</h6>
-		<br class="space">
-		<a class = "sub2" href="https://stellar.mit.edu/S/course/21G/fa15/21G.701/index.html">21G.701</a><br>
-		<h6>Spanish 1</h6>
+	<div class='classes'>
+		<div class='item'>
+			<a href="http://mit.edu/6.033/www/">6.033</a><br>
+			<h6>Computer Systems Engineering</h6>
+		</div>
+		
+		<div class='item'>
+			<a href="https://groups.csail.mit.edu/mac/users/gjs/6.945/">6.945</a><br>
+			<h6>Adventures in Advanced Symbolic Programming</h6>
+		</div>
+		
+		<div class='item'>
+			<a href="https://stellar.mit.edu/S/course/6/sp16/6.807/">6.807</a><br>
+			<h6>Computational Fabrication</h6>
+		</div>
+		
+		<div class='item'>
+			<a class="sub2" href="https://learning-modules.mit.edu/class/index.html?uuid=/course/21G/sp16/21G.702">21g.702</a><br>
+			<h6>Spanish II</h6>
+		</div>
+		
+		<div class='item'>
+			<a class = "sub2" href="https://stellar.mit.edu/S/course/21W/sp16/21W.755/index.html">21W.755</a><br>
+			<h6>Writng &amp; Reading Short Stories</h6>
+		</div>
 	</div>
 	<canvas id="canvas2"></canvas>
 
