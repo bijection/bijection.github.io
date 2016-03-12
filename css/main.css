@@ -53,6 +53,11 @@ canvas {
 
 }
 
+h2 a{
+  color: #724C4C
+}
+
+
 .footerstuff {
   display: inline-block;
   vertical-align: middle;
