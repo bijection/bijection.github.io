@@ -1,0 +1,38 @@
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+  margin: 0px;
+  font-family: Poly, Georgia, Serif;
+  line-height: 150%;
+  font-weight: 300;
+}
+
+#logo {
+	position: sticky;
+	height: auto;
+	width: 100%;
+	padding: 40px 20px;
+	top: 0;
+	z-index: -1;
+}
+
+a {
+	text-decoration: none;
+}
+
+#content {
+	padding: 0 20px;
+	background: linear-gradient(#ffffff00, #ffffffab 100px);
+}
+
+h2 {
+	font-style: italic;
+	font-weight: normal;
+	margin-bottom: 8px;
+}
+
+h2:first-child {
+	margin-top: 0;
+}

@@ -4,7 +4,7 @@
 			Hi Mom!‌
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon/apple-touch-icon-57x57.png" />
 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon/apple-touch-icon-114x114.png" />
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicon/apple-touch-icon-72x72.png" />
@@ -19,7 +19,7 @@
 		<link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16" />
 		<link rel="icon" type="image/png" href="favicon/favicon-128.png" sizes="128x128" />
 
-		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+		<link href="https://fonts.googleapis.com/css?family=Poly:400,400i" rel="stylesheet">
 
 		<meta name="application-name" content="&nbsp;"/>
 		<meta name="msapplication-TileColor" content="#FFFFFF" />
@@ -31,61 +31,67 @@
 
 	</head>
 	<body>
-		<canvas id="canvas"></canvas>
-		<div class="footer">
-			<div class='noheight'><a href="#antigone"><img src="img/down_brown.png" class="down"></a></div><br />
-			<div class="burritolike">
-				<div class="narcissus">
 
-					<!-- <div>
-					Repulsion Distance<br />
-					<input type="range" value="90" min="0" max="200" oninput="params.push=parseInt(this.value)">
-					<br />
-					<br />
+		<a href=".">
+		<svg width="303" height="37" viewBox="0 0 303 37" fill="none" xmlns="http://www.w3.org/2000/svg" id="logo">
+		<path d="M269.7 33.6083C271.954 34.7842 274.306 35.6334 276.756 36.156C279.205 36.6786 281.704 36.9399 284.252 36.9399C286.963 36.9399 289.462 36.5153 291.748 35.6661C294.035 34.8168 296.011 33.6083 297.676 32.0405C299.342 30.44 300.649 28.5128 301.596 26.2591C302.511 24.0053 302.968 21.4902 302.968 18.7139C302.968 15.9375 302.511 13.4224 301.596 11.1687C300.649 8.9149 299.342 7.00411 297.676 5.43627C296.011 3.83577 294.035 2.6109 291.748 1.76166C289.462 0.912414 286.963 0.487793 284.252 0.487793C281.475 0.487793 278.928 0.830756 276.609 1.51668C274.257 2.16995 272.199 3.31316 270.435 4.94632L275.825 10.8257C276.87 9.74781 278.046 8.93123 279.352 8.37596C280.659 7.82069 282.292 7.54305 284.252 7.54305C285.885 7.54305 287.371 7.82069 288.71 8.37596C290.017 8.93123 291.144 9.71515 292.091 10.7277C293.038 11.7076 293.773 12.8835 294.296 14.2553C294.786 15.6272 295.031 17.1134 295.031 18.7139C295.031 20.347 294.786 21.8495 294.296 23.2214C293.773 24.5606 293.038 25.7365 292.091 26.749C291.144 27.7289 290.017 28.4965 288.71 29.0518C287.371 29.6071 285.885 29.8847 284.252 29.8847C282.586 29.8847 281.149 29.705 279.94 29.3457C278.732 28.9538 277.768 28.5618 277.05 28.1699V22.5355H283.272V15.4802H269.7V33.6083Z" fill="#DFDFDF"/>
+		<path d="M233.723 22.6825C233.723 24.7402 234.033 26.6347 234.653 28.3659C235.274 30.097 236.205 31.5995 237.446 32.8734C238.655 34.1472 240.173 35.1435 242.003 35.8621C243.832 36.5807 245.939 36.9399 248.323 36.9399C250.74 36.9399 252.863 36.5807 254.692 35.8621C256.521 35.1435 258.057 34.1472 259.298 32.8734C260.506 31.5995 261.421 30.097 262.042 28.3659C262.662 26.6347 262.972 24.7402 262.972 22.6825V1.3697H255.329V22.3885C255.329 23.4664 255.166 24.4626 254.839 25.3772C254.48 26.2917 253.99 27.092 253.369 27.7779C252.749 28.4312 252.014 28.9538 251.165 29.3457C250.283 29.705 249.336 29.8847 248.323 29.8847C247.31 29.8847 246.38 29.705 245.53 29.3457C244.681 28.9538 243.946 28.4312 243.325 27.7779C242.705 27.092 242.231 26.2917 241.905 25.3772C241.545 24.4626 241.366 23.4664 241.366 22.3885V1.3697H233.723V22.6825Z" fill="#DFDFDF"/>
+		<path d="M227.441 31.8445C227.441 31.2239 227.327 30.6359 227.098 30.0807C226.869 29.5254 226.559 29.0518 226.167 28.6598C225.742 28.2352 225.252 27.9086 224.697 27.6799C224.142 27.4513 223.554 27.337 222.933 27.337C222.313 27.337 221.725 27.4513 221.169 27.6799C220.614 27.9086 220.141 28.2352 219.749 28.6598C219.324 29.0518 218.997 29.5254 218.769 30.0807C218.54 30.6359 218.426 31.2239 218.426 31.8445C218.426 32.4651 218.54 33.053 218.769 33.6083C218.997 34.1636 219.324 34.6535 219.749 35.0781C220.141 35.4701 220.614 35.7804 221.169 36.009C221.725 36.2377 222.313 36.352 222.933 36.352C223.554 36.352 224.142 36.2377 224.697 36.009C225.252 35.7804 225.742 35.4701 226.167 35.0781C226.559 34.6535 226.869 34.1636 227.098 33.6083C227.327 33.053 227.441 32.4651 227.441 31.8445Z" fill="#DFDFDF"/>
+		<path d="M212.257 1.3697H204.614V36.058H212.257V1.3697Z" fill="#DFDFDF"/>
+		<path d="M197.368 1.3697H189.725V29.0028H175.565V36.058H197.368V1.3697Z" fill="#DFDFDF"/>
+		<path d="M171.052 1.3697H163.409V29.0028H149.25V36.058H171.052V1.3697Z" fill="#DFDFDF"/>
+		<path d="M144.737 1.3697H121.17V8.42496H137.094V14.8923H122.052V21.9475H137.094V29.0028H120.288V36.058H144.737V1.3697Z" fill="#DFDFDF"/>
+		<path d="M114.17 1.3697H100.745C98.9814 1.3697 97.3155 1.54935 95.7477 1.90864C94.1472 2.23527 92.759 2.80688 91.5831 3.62346C90.3746 4.40738 89.4274 5.48527 88.7415 6.85712C88.0229 8.19631 87.6636 9.87847 87.6636 11.9036C87.6636 14.3533 88.3005 16.4438 89.5744 18.1749C90.8482 19.8734 92.71 20.9513 95.1598 21.4086L86.3407 36.058H95.5027L102.754 22.1925H106.527V36.058H114.17V1.3697ZM106.527 15.7252H102.019C101.333 15.7252 100.615 15.7089 99.8633 15.6762C99.0794 15.6109 98.3771 15.4639 97.7565 15.2352C97.1359 14.9739 96.6296 14.582 96.2377 14.0594C95.813 13.5367 95.6007 12.8018 95.6007 11.8546C95.6007 10.9727 95.7804 10.2704 96.1397 9.74782C96.499 9.2252 96.9562 8.83324 97.5115 8.57194C98.0668 8.27797 98.7037 8.08199 99.4223 7.984C100.141 7.88601 100.843 7.83702 101.529 7.83702H106.527V15.7252Z" fill="#DFDFDF"/>
+		<path d="M82.3997 1.3697H70.8369L62.8507 24.0053H62.7527L54.7176 1.3697H43.2038V36.058H50.847V9.45385H50.945L60.058 36.058H65.8884L74.6585 9.45385H74.7565V36.058H82.3997V1.3697Z" fill="#DFDFDF"/>
+		<path d="M37.9939 18.7139C37.9939 15.9375 37.5366 13.4224 36.622 11.1687C35.6748 8.9149 34.3683 7.00411 32.7025 5.43627C31.0366 3.83577 29.0605 2.6109 26.7741 1.76166C24.4877 0.912414 21.9889 0.487793 19.2779 0.487793C16.5668 0.487793 14.0681 0.912414 11.7816 1.76166C9.49522 2.6109 7.5191 3.83577 5.85327 5.43627C4.18745 7.00411 2.89727 8.9149 1.9827 11.1687C1.03546 13.4224 0.561829 15.9375 0.561829 18.7139C0.561829 21.4902 1.03546 24.0053 1.9827 26.2591C2.89727 28.5128 4.18745 30.44 5.85327 32.0405C7.5191 33.6083 9.49522 34.8168 11.7816 35.6661C14.0681 36.5153 16.5668 36.9399 19.2779 36.9399C21.9889 36.9399 24.4877 36.5153 26.7741 35.6661C29.0605 34.8168 31.0366 33.6083 32.7025 32.0405C34.3683 30.44 35.6748 28.5128 36.622 26.2591C37.5366 24.0053 37.9939 21.4902 37.9939 18.7139ZM30.0567 18.7139C30.0567 20.347 29.8118 21.8495 29.3218 23.2214C28.7992 24.5606 28.0643 25.7365 27.117 26.749C26.1698 27.7289 25.0429 28.4965 23.7364 29.0518C22.3972 29.6071 20.911 29.8847 19.2779 29.8847C17.6447 29.8847 16.1749 29.6071 14.8683 29.0518C13.5292 28.4965 12.3859 27.7289 11.4387 26.749C10.4915 25.7365 9.77288 24.5606 9.28293 23.2214C8.76032 21.8495 8.49899 20.347 8.49899 18.7139C8.49899 17.1134 8.76032 15.6272 9.28293 14.2553C9.77288 12.8835 10.4915 11.7076 11.4387 10.7277C12.3859 9.71515 13.5292 8.93123 14.8683 8.37596C16.1749 7.82069 17.6447 7.54305 19.2779 7.54305C20.911 7.54305 22.3972 7.82069 23.7364 8.37596C25.0429 8.93123 26.1698 9.71515 27.117 10.7277C28.0643 11.7076 28.7992 12.8835 29.3218 14.2553C29.8118 15.6272 30.0567 17.1134 30.0567 18.7139Z" fill="#DFDFDF"/>
+		</svg>
+		</a>
 
-					Attraction Distance<br />
-					<input type="range" value="15" min="0" max="100" oninput="params.pull=parseInt(this.value)">
-					<br />
-					<br />
+		<div id='content'>
+		<h2>About Me</h2>
+		<div>My name is Guillermo Webster, and I live with my girlfriend <a href="https://reyesdance.com">Jocelyn Reyes</a> and my frequent collaborator <a href=
+				"antimatter15.com">Kevin Kwok</a> in San Francisco, CA.</div>
 
-					Viscosity<br />
-					<input type="range" value="10" min="1" max="1000" oninput="params.visc=parseInt(this.value);">
-					<br />
-					<br />
+		<div>For questions, proposals, or general hi-saying, you can reach me at <a href="mailto:guillermo@omrelli.ug">guillermo@omrelli.ug</a> or on <a href=".">Twitter</a>.</div>
 
-					Force<br />
-					<input type="range" value="1" min="0" max="100" oninput="params.mult=Math.pow(2,(this.value/100000))-1;">
-					<br />
-					<br />
+		<h2>Works by Category</h2>
+		<div><a href=".">Popular Libraries</a></div>
+		<div><a href=".">Development Environments</a></div>
+		<div><a href=".">Data Tools for Normal People</a></div>
+		<div><a href=".">Games and Simulations</a></div>
+		<div><a href=".">Computer Vision Applications</a></div>
+		<div><a href=".">Prank Projects</a></div>
+		<div><a href=".">Political Applications</a></div>
 
-					Push to Pull Ratio<br />
-					<input type="range" value="50" min="0" max="100" oninput="params.pushratio=this.value/100;">
-					<br />
-					<br />
-					</div> -->
-
-					<h1 id="antigone">Hallo</h1>
-					<h2>I'm <a href="http://www.businessinsider.in/15-incredibly-impressive-students-at-MIT/Guillermo-Webster-helped-build-an-app-that-lets-users-edit-and-remix-any-video-/slideshow/49571172.cms">Guillermo Webster</a></h2>
-					<p>I'm a senior at MIT &mdash; this is my 'obligatory online presence'. I make <a href="http://tesseract.projectnaptha.com">Tesseract.js</a>, <a href="http://projectnaptha.com">Project Naptha</a>, <a href="http://alpha.trycarbide.com">Carbide</a>, <a href="http://snakt.com">Snakt</a>, and some other things.</p>
-
-					<p>You can say hallo to me at <a href="mailto:gui@mit.edu">gui@mit.edu</a>!</p>
-
-				</div>
-			</div>
-			<div class='addendum'>
-					Addendum:
-					<a href="https://twitter.com/biject">My Twitter</a> |
-					<a href="https://www.producthunt.com/@biject">My Product Hunt</a> |
-					<a href="http://news.mit.edu/2016/project-sandcastle-student-startups-0919">guillermo webster @ mit sandcastle</a> |
-					<a href="https://news.greylock.com/hackfests-arent-about-winning-cd8ee9a2ceac#.7ane0klw9">guillermo webster @ greylock hackfest</a> |
-					<a href="https://www.linkedin.com/in/guillermo-webster-8274298a">My LinkedIn</a>
-					<!-- <a href="https://books.google.com/books?id=V8_FAgAAQBAJ&pg=PP5&lpg=PP5&dq=guillermo+webster">"Cover by Guillermo Webster"</a> -->
-				</div>
+		<h2>Works by Chronology</h2>
+		<div class='work'>smoke.js</div>
+		<div class='work'>g9.js</div>
+		<div class='work'>tesseract.js</div>
+		<div class='work'>carbide</div>
+		<div class='work'>nearley playground</div>
+		<div class='work'>franchise</div>
+		<div class='work'>robosheets</div>
+		<div class='work'>tables</div>
+		<div class='work'>etherworld</div>
+		<div class='work'>wallsmash</div>
+		<div class='work'>particles-demo</div>
+		<div class='work'>evm</div>
+		<div class='work'>sistine</div>
+		<div class='work'>naptha</div>
+		<div class='work'>brass doge</div>
+		<div class='work'>morse code golf</div>
+		<div class='work'>arbys</div>
+		<div class='work'>lobbytogether</div>
 		</div>
-		<script type="text/javascript" src="js/raf.js" ></script>
-		<script type="text/javascript" src="js/dimensions.js" ></script>
-		<script type="text/javascript" src="js/mouse.js" ></script>
-		<script type="text/javascript" src="js/particles.js" ></script>
-		<script type="text/javascript" src="js/main.js" ></script>
+
+
+		<!-- <canvas id="canvas"></canvas> -->
+<!-- 		<script type="text/javascript" src="js/raf.js" ></script> -->
+<!-- 		<script type="text/javascript" src="js/dimensions.js" ></script> -->
+<!-- 		<script type="text/javascript" src="js/mouse.js" ></script> -->
+<!-- 		<script type="text/javascript" src="js/particles.js" ></script> -->
+		<script type="text/javascript" src="./index.js" ></script>
+
+
 	</body>
 </html>
